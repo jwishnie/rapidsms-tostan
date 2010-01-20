@@ -15,13 +15,13 @@
 #
 
 ### BEGIN INIT INFO
-# Provides:          amatd daemon instance
+# Provides:          rapidsms daemon instance
 # Required-Start:    $all
 # Required-Stop:     $all
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: starts instance of amatd daemon
-# Description:       starts instance of amatd daemon using start-stop-daemon
+# Short-Description: starts instances of rapidsms router and web server
+# Description:       starts instance of rapidsms router and web server using start-stop-daemon
 ### END INIT INFO
 
 # set -e
@@ -31,7 +31,7 @@ WHERE_AM_I=`dirname $ME`
 
 ############### EDIT ME ##################
 NAME="smsforum" # change to your project name
-DAEMON=$WHERE_AM_I/manage.py
+DAEMON=$WHERE_AM_I/rapidsms
 DAEMON_OPTS=""
 RUN_AS=root
 APP_PATH=$WHERE_AM_I
@@ -57,14 +57,6 @@ hard_stop_runserver() {
         kill -9 $i
     done
     echo "Hard stopped runserver"
-}
-
-hard_stop_spomsky() {
-    for i in `ps aux | grep -i "spomskyd" | grep -v grep | awk '{print $2}' ` ; do
-        kill -9 $i
-    done
-    rm $SPOMSKY_PID_FILE 2>/dev/null
-    echo "Hard stopped Spomskyd"
 }
 
 hard_stop_router() {
